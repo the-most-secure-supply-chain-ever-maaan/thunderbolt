@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import launchConfetti from './confetti'
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
@@ -24,7 +25,12 @@ function App() {
         <button
           type="button"
           className="counter"
-          onClick={() => setCount((count) => count + 1)}
+          onClick={(e) => {
+            setCount((count) => count + 1)
+            const x = e.clientX || window.innerWidth / 2
+            const y = e.clientY || window.innerHeight / 2
+            launchConfetti(x, y)
+          }}
         >
           Count is {count}
         </button>
