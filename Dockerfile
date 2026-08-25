@@ -1,4 +1,4 @@
-FROM node:sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32 AS builder
+FROM node@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32 AS builder
 
 # Set working directory
 WORKDIR /app
@@ -11,7 +11,7 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM nginx:stable-alpine
+FROM nginx@sha256:39ffdd8ece695aeb3874c7d3eaf863dc64e82482
 
 # Replace default nginx config to listen on port 5731 and support SPA routing
 COPY ./docker/nginx.default.conf /etc/nginx/conf.d/default.conf
