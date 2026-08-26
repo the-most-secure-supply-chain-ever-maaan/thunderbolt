@@ -48,4 +48,4 @@ jobs:
   build-image:
     name: Build Image
     needs: build
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@a6570b906e58c5b141ea760dfe0142f1c35ca10d
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@8e8421dce6ca2b39bcbe2caff53916207ba27a59
