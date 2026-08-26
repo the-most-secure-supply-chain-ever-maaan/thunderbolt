@@ -19,6 +19,7 @@ permissions:
 
 jobs:
   run-tests-and-lint:
+    name: Tests and Lint
     uses: ./.github/workflows/ci.yml
 
   build:
