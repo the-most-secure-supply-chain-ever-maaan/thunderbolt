@@ -15,6 +15,7 @@ function createCanvas() {
 export default function launchConfetti(x = window.innerWidth / 2, y = window.innerHeight / 2) {
   const canvas = createCanvas()
   const ctx = canvas.getContext('2d')
+  if (!ctx) return
   document.body.appendChild(canvas)
 
   const particles = []

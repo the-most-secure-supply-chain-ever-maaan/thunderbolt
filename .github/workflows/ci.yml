@@ -1,30 +1,13 @@
 name: Build
 on:
-  pull_request:
-    branches:
-      - main
-  push:
-    branches:
-      - main
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  workflow_call:
 
 permissions:
   contents: read
-  packages: write
-  id-token: write
-  attestations: write
+
 
 jobs:
   run-tests-and-lint:
-    name: Tests and Lint
-    uses: ./.github/workflows/ci.yml
-
-  build:
-    needs: run-tests-and-lint
-    name: Check and Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,15 +17,22 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: '.nvmrc'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        id: build
-        run: npm run build
+      - name: Lint
+        run: npm run lint
 
+      - name: Test
+        run: npm run test
+    
   # build-image:
   #   name: Build Image
   #   uses: jholtan/actions/.github/workflows/build.yaml@main
+
+
+  
+
+    
