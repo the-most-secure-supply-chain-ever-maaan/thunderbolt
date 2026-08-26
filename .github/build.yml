@@ -41,4 +41,8 @@ jobs:
         id: build
         run: npm run build
 
+      - name: Test
+        run: npm run test
+  
+
     
