@@ -17,7 +17,7 @@ permissions:
   id-token: write
   attestations: write
   security-events: write
-
+  artifact-metadata: write
 
 jobs:
   run-tests-and-lint:
