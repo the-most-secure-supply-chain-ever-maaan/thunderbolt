@@ -36,6 +36,9 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+      - name: Test
+        run: npm run test
     
       - name: Build
         id: build
@@ -44,8 +47,7 @@ jobs:
   #   name: Build Image
   #   uses: jholtan/actions/.github/workflows/build.yaml@main
 
-      - name: Test
-        run: npm run test
+
   
 
     
