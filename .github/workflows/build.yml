@@ -40,8 +40,8 @@ jobs:
       - name: Build
         id: build
         run: npm run build
-  build-image:
-    name: Build Image
-    uses: jholtan/actions/.github/workflows/build.yaml@main
+  # build-image:
+  #   name: Build Image
+  #   uses: jholtan/actions/.github/workflows/build.yaml@main
 
     
