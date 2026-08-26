@@ -29,10 +29,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
-          node-version: '.nvmrc'
+          node-version-file: '.nvmrc'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Lint
         run: npm run lint
@@ -40,5 +40,8 @@ jobs:
       - name: Build
         id: build
         run: npm run build
+  # build-image:
+  #   name: Build Image
+  #   uses: jholtan/actions/.github/workflows/build.yaml@main
 
     
