@@ -16,6 +16,8 @@ permissions:
   packages: write
   id-token: write
   attestations: write
+  security-events: write
+
 
 jobs:
   run-tests-and-lint:
@@ -43,6 +45,7 @@ jobs:
         id: build
         run: npm run build
 
-  # build-image:
-  #   name: Build Image
-  #   uses: jholtan/actions/.github/workflows/build.yaml@main
+  build-image:
+    name: Build Image
+    needs: build
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@a6570b906e58c5b141ea760dfe0142f1c35ca10d
