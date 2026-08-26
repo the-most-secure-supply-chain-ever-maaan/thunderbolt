@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from './App'
+import { test, expect } from 'vitest'
 
 test('counter starter på 0', () => {
   render(<App />)
