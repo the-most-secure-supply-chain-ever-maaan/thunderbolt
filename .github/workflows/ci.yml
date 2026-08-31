@@ -1,38 +1,47 @@
-name: Build
+name: CI
 on:
-  workflow_call:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
-
+  packages: write
+  id-token: write
+  attestations: write
+  security-events: write
+  artifact-metadata: write
 
 jobs:
-  run-tests-and-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+  build-and-test:
+    name: Build and Test
+    uses: ./.github/workflows/build-and-test.yml
 
-      - name: Setup Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
-        with:
-          node-version-file: '.nvmrc'
+  build-image:
+    name: Build Image
+    needs: build-and-test
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@main
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Test
-        run: npm run test
-    
-  # build-image:
-  #   name: Build Image
-  #   uses: jholtan/actions/.github/workflows/build.yaml@main
-
-
-  
-
-    
+  verify-and-update-digest:
+    name: Verify Provenance and Update Deployment
+    needs: build-image
+    if: github.event_name == 'push'
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/verify-and-bump-deployment.yaml@main
+    with:
+      image: ghcr.io/${{ github.repository }}
+      digest: ${{ needs.build-image.outputs.digest }}
+      owner: the-most-secure-supply-chain-ever-maaan
+      signer-workflow: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml
+      registry-username: ${{ github.actor }}
+      deploy-repo: the-most-secure-supply-chain-ever-maaan/cluster-config
+      deployment-file: apps/thunderbolt/deployment.yml
+    secrets:
+      registry-token: ${{ secrets.GITHUB_TOKEN }}
+      deploy-repo-token: ${{ secrets.CLUSTER_CONFIG_TOKEN }}
