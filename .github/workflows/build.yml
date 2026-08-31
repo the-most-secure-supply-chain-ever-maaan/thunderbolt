@@ -49,3 +49,21 @@ jobs:
     name: Build Image
     needs: build
     uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@main
+
+  verify-and-update-digest:
+    name: Verify Provenance and Update Deployment
+    needs: build-image
+    if: github.event_name == 'push'
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/verify-and-bump-deployment.yaml@main
+    with:
+      image: ghcr.io/${{ github.repository }}
+      digest: ${{ needs.build-image.outputs.digest }}
+      owner: the-most-secure-supply-chain-ever-maaan
+      signer-workflow: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml
+      registry-username: ${{ github.actor }}
+      deploy-repo: the-most-secure-supply-chain-ever-maaan/cluster-config
+      deployment-file: apps/thunderbolt/deployment.yml
+    secrets:
+      registry-token: ${{ secrets.GITHUB_TOKEN }}
+      deploy-repo-token: ${{ secrets.CLUSTER_CONFIG_TOKEN }}
+
