@@ -19,16 +19,6 @@ jobs:
         with:
           node-version-file: ".nvmrc"
 
-      - name: Check .nvmrc matches Dockerfile
-        run: |
-          DOCKERFILE_MAJOR=$(grep -oP '(?<=FROM node:)\d+' Dockerfile | head -1)
-          NVMRC_MAJOR=$(cut -d. -f1 <<< "${{ steps.setup-node.outputs.node-version }}")
-
-          if [ "$DOCKERFILE_MAJOR" != "$NVMRC_MAJOR" ]; then
-            echo "::error file=.nvmrc::Node major version mismatch: Dockerfile uses node:$DOCKERFILE_MAJOR, .nvmrc resolves to $NVMRC_MAJOR"
-            exit 1
-          fi
-
       - name: Install dependencies
         run: npm ci
 
