@@ -1,4 +1,5 @@
-FROM node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32 AS builder
+# node 24.20.0 (LTS)
+FROM node:24-alpine@sha256:e67514e5d0f6c46656005e1b693b2ec9d52e80b641307de684d4a015ba7a4eaf AS builder
 
 # Set working directory
 WORKDIR /app
@@ -11,6 +12,7 @@ RUN npm ci --ignore-scripts
 COPY . .
 RUN npm run build
 
+# nginx 1.31.5 (alpine 3.24.1)
 FROM nginx:alpine@sha256:a9ae6f6d078d477e21323310498e5196cb2b7c0aedd9e07b7306612077227d7c
 
 # Replace default nginx config to listen on port 5731 and support SPA routing
