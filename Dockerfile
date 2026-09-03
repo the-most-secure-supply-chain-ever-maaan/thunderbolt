@@ -11,7 +11,7 @@ RUN npm ci --ignore-scripts
 COPY . .
 RUN npm run build
 
-FROM nginx:alpine@sha256:97d490c12ba55b4946b01546d1c3ed324e8d41ab1c9fcb2a616aa470620e5b46
+FROM nginx:alpine@sha256:a9ae6f6d078d477e21323310498e5196cb2b7c0aedd9e07b7306612077227d7c
 
 # Replace default nginx config to listen on port 5731 and support SPA routing
 COPY ./docker/nginx.default.conf /etc/nginx/conf.d/default.conf
