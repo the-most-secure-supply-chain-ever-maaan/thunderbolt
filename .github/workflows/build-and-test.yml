@@ -11,11 +11,11 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Node.js
         id: setup-node
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: ".nvmrc"
 
@@ -28,13 +28,6 @@ jobs:
       - name: Test
         run: npm run test
 
-      - name: Install dependencies
-        run: npm ci
-
       - name: Build
         id: build
         run: npm run build
-
-  # build-image:
-  #   name: Build Image
-  #   uses: jholtan/actions/.github/workflows/build.yaml@main
