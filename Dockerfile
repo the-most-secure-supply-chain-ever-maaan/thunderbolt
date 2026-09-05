@@ -13,7 +13,7 @@ COPY . .
 RUN npm run build
 
 # nginx 1.31.5 (alpine 3.24.1)
-FROM nginx:alpine@sha256:a9ae6f6d078d477e21323310498e5196cb2b7c0aedd9e07b7306612077227d7c
+FROM nginx:alpine@sha256:72ba65eb42c10344912a84ff42408db7d34f2feb642204570ab8fc5ffd29f1d3
 
 # Replace default nginx config to listen on port 5731 and support SPA routing
 COPY ./docker/nginx.default.conf /etc/nginx/conf.d/default.conf
