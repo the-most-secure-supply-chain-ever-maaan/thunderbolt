@@ -27,21 +27,17 @@ jobs:
   build-image:
     name: Build Image
     needs: build-and-test
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@ccf930b396b6f3dd8267d68e7ad58531059b5bc7 # v1.0.0
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@c15f902df5df381a1cfef8805b641aa4e4cb392b # v1.2.0
 
   verify-and-update-digest:
     name: Verify Provenance and Update Deployment
     needs: build-image
     if: github.event_name == 'push'
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/verify-and-bump-deployment.yaml@ccf930b396b6f3dd8267d68e7ad58531059b5bc7 # v1.0.0
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/verify-and-bump-deployment.yaml@c15f902df5df381a1cfef8805b641aa4e4cb392b # v1.2.0
     with:
       image: ghcr.io/${{ github.repository }}
       digest: ${{ needs.build-image.outputs.digest }}
-      owner: the-most-secure-supply-chain-ever-maaan
-      signer-workflow: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml
       registry-username: ${{ github.actor }}
-      deploy-repo: the-most-secure-supply-chain-ever-maaan/cluster-config
-      deployment-file: apps/thunderbolt/deployment.yml
     secrets:
       registry-token: ${{ secrets.GITHUB_TOKEN }}
       deploy-repo-token: ${{ secrets.CLUSTER_CONFIG_TOKEN }}
