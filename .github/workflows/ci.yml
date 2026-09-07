@@ -33,7 +33,7 @@ jobs:
     name: Verify Provenance and Update Deployment
     needs: build-image
     if: github.event_name == 'push'
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/verify-and-bump-deployment.yaml@ccf930b396b6f3dd8267d68e7ad58531059b5bc7 # v1.0.0
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/verify-and-bump-deployment.yaml@9e645770cc8b8f66b23c9730c9499c3f34a50be9 # v1.1.0
     with:
       image: ghcr.io/${{ github.repository }}
       digest: ${{ needs.build-image.outputs.digest }}
