@@ -27,7 +27,7 @@ jobs:
   build-image:
     name: Build Image
     needs: build-and-test
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@ccf930b396b6f3dd8267d68e7ad58531059b5bc7 # v1.0.0
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@9e645770cc8b8f66b23c9730c9499c3f34a50be9 # v1.1.0
 
   verify-and-update-digest:
     name: Verify Provenance and Update Deployment
