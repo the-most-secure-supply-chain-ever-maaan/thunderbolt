@@ -9,7 +9,6 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -27,16 +26,6 @@ jobs:
   build-image:
     name: Build Image
     needs: build-and-test
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@bf94f2b4fb42f4ea2727c5b29a5eb3161328d98b # v1.4.0
-
-  verify-and-update-digest:
-    name: Verify Provenance and Update Deployment
-    needs: build-image
-    if: github.event_name == 'push'
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/verify-and-bump-deployment.yaml@bf94f2b4fb42f4ea2727c5b29a5eb3161328d98b # v1.4.0
-    with:
-      digest: ${{ needs.build-image.outputs.digest }}
-      registry-username: ${{ github.actor }}
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@eca4c1fc0dbd0f19943029aeca7fb1302a20a8d1 # 1.5.0
     secrets:
-      registry-token: ${{ secrets.GITHUB_TOKEN }}
       deploy-repo-token: ${{ secrets.CLUSTER_CONFIG_TOKEN }}
