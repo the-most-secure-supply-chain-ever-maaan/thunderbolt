@@ -19,9 +19,11 @@ jobs:
         with:
           node-version-file: ".nvmrc"
 
-      - name: Check that package.json does not contain any version ranges
-        run: |
-          grep -E '"\s*:\s*"[\^~]' package.json && exit 1 || exit 0
+      - name: Require digest-pinned base images
+        run: grep -qE '^FROM .+@sha256:' Dockerfile
+
+      - name: Forbid non-exact version ranges in package.json
+        run: '! grep -qE "\"\\s*:\\s*\"[\^~]" package.json'
 
       - name: Install dependencies
         run: npm ci
