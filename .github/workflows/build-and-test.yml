@@ -19,6 +19,17 @@ jobs:
         with:
           node-version-file: ".nvmrc"
 
+      - name: Require digest-pinned base images
+        run: |
+          if grep -E '^FROM ' Dockerfile | grep -vqE '@sha256:[0-9a-f]{64}([[:space:]]|$)'; then
+            echo "Upinnede/ugyldige FROM-linjer:"
+            grep -E '^FROM ' Dockerfile | grep -vE '@sha256:[0-9a-f]{64}([[:space:]]|$)'
+            exit 1
+          fi
+
+      - name: Forbid non-exact version ranges in package.json
+        run: '! grep -qE "\"\\s*:\\s*\"[\^~]" package.json'
+
       - name: Install dependencies
         run: npm ci
 
