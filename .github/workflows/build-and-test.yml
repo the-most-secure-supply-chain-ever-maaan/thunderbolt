@@ -21,10 +21,10 @@ jobs:
 
       - name: Require digest-pinned base images
         run: |
-          BAD=$(grep -E '^FROM ' Dockerfile | grep -vE '@sha256:[0-9a-f]{64}([[:space:]]|$)')
-          if [ -n "$BAD" ]; then
+          UNPINNED_VERSIONS=$(grep -E '^FROM ' Dockerfile | grep -vE '@sha256:[0-9a-f]{64}([[:space:]]|$)')
+          if [ -n "$UNPINNED_VERSIONS" ]; then
             echo "Upinnede/ugyldige FROM-linjer:"
-            echo "$BAD"
+            echo "$UNPINNED_VERSIONS"
             exit 1
           fi
 
