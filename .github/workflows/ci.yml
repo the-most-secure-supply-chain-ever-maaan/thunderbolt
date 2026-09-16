@@ -26,6 +26,6 @@ jobs:
   build-image:
     name: Build Image
     needs: build-and-test
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@eca4c1fc0dbd0f19943029aeca7fb1302a20a8d1 # 1.5.0
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@32780b84261cb00b0988e71a11bf9840c9f73ecb # v1.7.0
     secrets:
-      deploy-repo-token: ${{ secrets.CLUSTER_CONFIG_TOKEN }}
+      BUMP_CLUSTER_CONFIG_KEY: ${{ secrets.BUMP_CLUSTER_CONFIG_KEY }}

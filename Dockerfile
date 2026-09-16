@@ -15,7 +15,7 @@ RUN npm run build
 # nginx 1.31.5 (alpine 3.24.1)
 FROM nginx:alpine@sha256:72ba65eb42c10344912a84ff42408db7d34f2feb642204570ab8fc5ffd29f1d3
 
-RUN apk add --no-cache --upgrade libuuid
+RUN apk add --no-cache --upgrade libuuid=2.42.3-r1
 
 # Replace default nginx config to listen on port 5731 and support SPA routing
 COPY ./docker/nginx.default.conf /etc/nginx/conf.d/default.conf
