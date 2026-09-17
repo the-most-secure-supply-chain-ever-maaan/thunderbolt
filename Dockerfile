@@ -1,5 +1,5 @@
-# node 24.20.0 (LTS)
-FROM node:24-alpine@sha256:e67514e5d0f6c46656005e1b693b2ec9d52e80b641307de684d4a015ba7a4eaf AS builder
+# node 26
+FROM node:26-alpine@sha256:ef24c5053d50fdc3e4e56eb4e7ddb7861874ab0fdc797046ba897581deb8e868 AS builder
 
 # Set working directory
 WORKDIR /app
@@ -12,10 +12,8 @@ RUN npm ci --ignore-scripts
 COPY . .
 RUN npm run build
 
-# nginx 1.31.5 (alpine 3.24.1)
-FROM nginx:alpine@sha256:72ba65eb42c10344912a84ff42408db7d34f2feb642204570ab8fc5ffd29f1d3
-
-RUN apk add --no-cache --upgrade libuuid=2.42.3-r1
+# nginx 1.31.6 (alpine 3.24.1)
+FROM nginx:alpine@sha256:c8497b180665e631ec92a5091125bec5b214f0e2b99409e30653a125b37557da
 
 # Replace default nginx config to listen on port 5731 and support SPA routing
 COPY ./docker/nginx.default.conf /etc/nginx/conf.d/default.conf
