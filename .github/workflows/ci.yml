@@ -12,11 +12,6 @@ concurrency:
 
 permissions:
   contents: read
-  packages: write
-  id-token: write
-  attestations: write
-  security-events: write
-  artifact-metadata: write
 
 jobs:
   build-and-test:
@@ -26,5 +21,12 @@ jobs:
   build-image:
     name: Build Image
     needs: build-and-test
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+      security-events: write
+      artifact-metadata: write
     uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@68a7cfa209c926ae4e3d78a8fd67d61fa25f4bda # v1.9.0
     secrets: inherit
