@@ -26,5 +26,5 @@ jobs:
   build-image:
     name: Build Image
     needs: build-and-test
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@68a7cfa209c926ae4e3d78a8fd67d61fa25f4bda # v1.9.0
     secrets: inherit
