@@ -28,5 +28,46 @@ jobs:
       attestations: write
       security-events: write
       artifact-metadata: write
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@e2e761f7dc238f0e793114edfc8dd34d6f7e535a # v1.10.0
-    secrets: inherit
+    # MERK: oppdater til SHA-en build.yaml faktisk far pa main etter merge,
+    # og til taggen som settes der. Uten denne oppdateringen kaller vi en
+    # build.yaml som fortsatt har sin egen bump-jobb, og da bumpes det to ganger.
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@REPLACE_ME # vX.Y.Z
+
+  request-deployment-bump:
+    name: Request Deployment Bump
+    needs: build-image
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment: deploy
+    permissions:
+      contents: read
+    steps:
+      - name: Mint dispatch token for cluster-config
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        id: dispatch-token
+        with:
+          client-id: ${{ vars.BUMP_APP_CLIENT_ID }}
+          private-key: ${{ secrets.BUMP_CLUSTER_CONFIG_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: cluster-config
+          permission-actions: write
+
+      - name: Trigger bump in cluster-config
+        env:
+          GH_TOKEN: ${{ steps.dispatch-token.outputs.token }}
+          OWNER: ${{ github.repository_owner }}
+          DIGEST: ${{ needs.build-image.outputs.digest }}
+        run: |
+          set -euo pipefail
+
+          APP="${GITHUB_REPOSITORY#*/}"
+
+          gh workflow run bump-image.yml \
+            --repo "${OWNER}/cluster-config" \
+            --ref main \
+            -f app="$APP" \
+            -f digest="$DIGEST" \
+            -f source-digest="$GITHUB_SHA"
+
+          echo "Requested bump of ${APP} to ${DIGEST} in ${OWNER}/cluster-config."
+          echo "cluster-config verifies provenance itself before acting."
