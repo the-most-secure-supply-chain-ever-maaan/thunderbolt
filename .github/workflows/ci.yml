@@ -28,10 +28,7 @@ jobs:
       attestations: write
       security-events: write
       artifact-metadata: write
-    # MERK: oppdater til SHA-en build.yaml faktisk far pa main etter merge,
-    # og til taggen som settes der. Uten denne oppdateringen kaller vi en
-    # build.yaml som fortsatt har sin egen bump-jobb, og da bumpes det to ganger.
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@REPLACE_ME # vX.Y.Z
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@HASH # v1.12.0
 
   request-deployment-bump:
     name: Request Deployment Bump
@@ -42,7 +39,6 @@ jobs:
     permissions:
       contents: read
     steps:
-      # Lokal action krever at repoet er sjekket ut forst.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
