@@ -28,5 +28,23 @@ jobs:
       attestations: write
       security-events: write
       artifact-metadata: write
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@e2e761f7dc238f0e793114edfc8dd34d6f7e535a # v1.10.0
-    secrets: inherit
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@eb8ecdc730cafb5d7bc67e193f4e78193d431ee7 # v1.12.0
+
+  request-deployment-bump:
+    name: Request Deployment Bump
+    needs: build-image
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment: deploy
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: $/.github/actions/request-bump
+        with:
+          client-id: ${{ vars.BUMP_APP_CLIENT_ID }}
+          private-key: ${{ secrets.BUMP_CLUSTER_CONFIG_KEY }}
+          digest: ${{ needs.build-image.outputs.digest }}
