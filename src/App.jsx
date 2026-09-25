@@ -4,7 +4,7 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
-import { slsaLvl } from 'shared-lib'
+import { slsaLvl } from "@the-most-secure-supply-chain-ever-maaan/shared-lib"
 
 function App() {
   const [count, setCount] = useState(0)
