@@ -4,6 +4,7 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
+import { slsaLvl } from '@the-most-secure-supply-chain-ever-maaan/shared-lib'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,6 +21,9 @@ function App() {
           <h1>Hei SherWin og WILL.I.AM og Tore og Jobi og Even og Jarle</h1>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+          </p>
+          <p>
+            SLSA Level: {slsaLvl(2)}
           </p>
         </div>
         <button
