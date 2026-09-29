@@ -7,7 +7,7 @@ WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
-RUN npm ci --ignore-scripts 
+RUN --mount=type=secret,id=npmrc,target=/root/.npmrc npm ci --ignore-scripts
 
 # Build the app
 COPY . .
