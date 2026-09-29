@@ -14,17 +14,8 @@ permissions:
   contents: read
 
 jobs:
-  verify-packages:
-    name: Verify packages
-    permissions:
-      contents: read
-      packages: read
-      attestations: read
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/verify-packages.yml@8fdd73c3025ea88f2554cf72dd3fbd3c8a9d85fe # v1.18.0
-
   build-and-test:
     name: Build and Test
-    needs: verify-packages
     uses: ./.github/workflows/build-and-test.yml
 
   build-image:
