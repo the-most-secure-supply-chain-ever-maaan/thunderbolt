@@ -29,7 +29,7 @@ jobs:
       attestations: write
       security-events: write
       artifact-metadata: write
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@23599237543afe5069ddd8c4421beeb6512e1161
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@a772608be59739406c5207494d3a0033c2d5bc17
 
       
 
