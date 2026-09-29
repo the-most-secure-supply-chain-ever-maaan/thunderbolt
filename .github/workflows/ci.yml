@@ -20,7 +20,7 @@ jobs:
       contents: read
       packages: read
       attestations: read
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/verify-packages.yml@8fdd73c3025ea88f2554cf72dd3fbd3c8a9d85fe # v1.18.0
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/verify-packages.yml@9d6dd98339c8ffd3ef272aa1268892ac4e90f9fe
 
   build-and-test:
     name: Build and Test
@@ -37,7 +37,7 @@ jobs:
       attestations: write
       security-events: write
       artifact-metadata: write
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@8fdd73c3025ea88f2554cf72dd3fbd3c8a9d85fe # v1.18.0
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@9d6dd98339c8ffd3ef272aa1268892ac4e90f9fe
 
   request-deployment-bump:
     name: Request Deployment Bump
