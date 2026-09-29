@@ -6,8 +6,8 @@ ARG BUILDKIT_SBOM_SCAN_STAGE=true
 WORKDIR /app
 
 # Install dependencies
-COPY package*.json ./
-RUN npm ci --ignore-scripts 
+COPY package*.json .npmrc ./
+RUN --mount=type=secret,id=github_token,env=GITHUB_TOKEN npm ci --ignore-scripts
 
 # Build the app
 COPY . .

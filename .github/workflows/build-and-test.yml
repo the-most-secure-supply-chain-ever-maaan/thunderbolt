@@ -4,6 +4,7 @@ on:
 
 permissions:
   contents: read
+  packages: read
 
 jobs:
   run-tests-and-lint:
@@ -21,6 +22,7 @@ jobs:
         with:
           node-version-file: ".nvmrc"
 
+
       - name: Require digest-pinned base images
         run: |
           if grep -E '^FROM ' Dockerfile | grep -vqE '@sha256:[0-9a-f]{64}([[:space:]]|$)'; then
@@ -34,6 +36,8 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Lint
         run: npm run lint
