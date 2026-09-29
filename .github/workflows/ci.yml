@@ -30,6 +30,9 @@ jobs:
       security-events: write
       artifact-metadata: write
     uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@9d6dd98339c8ffd3ef272aa1268892ac4e90f9fe
+    with:
+      npmrc-secret: "" #placeholder
+      
 
   request-deployment-bump:
     name: Request Deployment Bump
