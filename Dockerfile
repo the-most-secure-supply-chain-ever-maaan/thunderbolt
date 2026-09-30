@@ -1,5 +1,5 @@
 # node 26
-FROM node:26-alpine@sha256:ef24c5053d50fdc3e4e56eb4e7ddb7861874ab0fdc797046ba897581deb8e868 AS builder
+FROM node:26-alpine@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 AS builder
 # Include dependencies from build layer
 ARG BUILDKIT_SBOM_SCAN_STAGE=true 
 # Set working directory
