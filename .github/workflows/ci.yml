@@ -29,7 +29,7 @@ jobs:
       attestations: write
       security-events: write
       artifact-metadata: write
-    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@46d77cf57ff9388e39a46a315f6dcbe29a4b4638
+    uses: the-most-secure-supply-chain-ever-maaan/workflows/.github/workflows/build.yaml@0ed13a28901befb40dcb6a2b3d32f073ba0d3a33
 
   request-deployment-bump:
     name: Request Deployment Bump
