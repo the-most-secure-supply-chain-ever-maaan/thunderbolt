@@ -2,7 +2,7 @@
 
 Thunderbolt er et demoprosjekt der vi har bygget og testet en byggekjede for programvare etter [SLSA v1.2](https://slsa.dev/spec/v1.2/) (Supply-chain Levels for Software Artifacts). Målet var å kunne spore et kjørende container-image tilbake til kildekoden det ble bygget fra, og å stoppe images som ikke er bygget på godkjent måte før de kommer inn i clusteret.
 
-Selve appen er en enkel Vite/React-app. Rundt den har vi satt opp bygging med GitHub Actions, signert provenance med Sigstore og verifisering i Kubernetes med Sigstore Policy Controller. Vi undersøkte også hvordan det samme kunne håndheves i Google Cloud Run med Binary Authorization. Det viste seg å være utfordrende å verifisere attesterte images før deploy i Google Cloud Run.
+Selve appen er en enkel Vite/React-app. Rundt den har vi satt opp bygging med GitHub Actions, signert provenance med Sigstore og verifisering i Kubernetes med Sigstore Policy Controller. Vi undersøkte også hvordan det samme kunne håndheves i Google Cloud Run med Binary Authorization. Det viste seg å være utfordrende å verifisere attesterte images, fordi Binary Authorization kan ikke verifisere attester fra Github direkte. Vi undersøkte en mulig løsning men valgte å ikke gå videre med det.
 
 Prosjektet er avsluttet. Vurderinger, kjente mangler og erfaringer er samlet i [sikkerhetsrapporten](./SIKKERHETSRAPPORT.md).
 
@@ -11,7 +11,7 @@ Prosjektet er avsluttet. Vurderinger, kjente mangler og erfaringer er samlet i [
 | Repo | Innhold |
 |---|---|
 | **thunderbolt** (dette repoet) | Appens kildekode, Dockerfile og workflowen som starter bygget |
-| [workflows](https://github.com/the-most-secure-supply-chain-ever-maaan/workflows) | Den et reusable workflow repository som bygger, pusher og attesterer imaget |
+| [workflows](https://github.com/the-most-secure-supply-chain-ever-maaan/workflows) | Den felles gjenbrukbare byggeworkflowen som bygger, pusher og attesterer imaget |
 | [cluster-config](https://github.com/the-most-secure-supply-chain-ever-maaan/cluster-config) | Kubernetes-manifester og ArgoCD-oppsett. ArgoCD deployer det som står her til clusteret |
 
 ## Flyt
@@ -48,8 +48,8 @@ flowchart TD
 
 SLSA er et rammeverk med krav til hvordan programvare bygges og dokumenteres, slik at man kan etterprøve hvor et artefakt kommer fra. Kravene er delt inn i spor, hvert med flere nivåer:
 
-- **Build** handler om hvordan imaget bygges og hvordan provenancen lages. Her når vi **L3**: bygget kjører på en fersk runner som slettes etterpå, provenancen signeres av byggeplattformen, og byggestegene er definert i en felles workflow i et eget repo.
-- **Source** handler om hvordan kildekoden er beskyttet. Her er vi på **L1**: koden ligger i git, men uten branch protection er historikken ikke beskyttet mot endringer.
+- **Build** handler om hvordan imaget bygges og hvordan provenancen lages. Her når vi **L3**: bygget kjører på en fersk runner som slettes etterpå, provenancen signeres av byggeplattformen, og byggestegene er definert i en felles workflow i et eget repo som er beskyttet med branch protection.
+- **Source** handler om hvordan kildekoden er beskyttet. `main` er beskyttet med branch protection, og alle endringer krever pull request.
 - **Dependencies** handler om tredjepartsavhengigheter. Sporet er et utkast og ikke en del av v1.2. Vi bygger med `npm ci --ignore-scripts`, som hindrer at pakker kjører egne skript under installasjon.
 
 Provenance dokumenterer hvor og hvordan et image er bygget. Sårbarheter og ondsinnet kode må fanges opp med andre tiltak, som code review og skanning av avhengigheter.
