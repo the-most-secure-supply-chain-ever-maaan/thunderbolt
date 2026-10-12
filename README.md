@@ -14,17 +14,28 @@ Prosjektet er avsluttet. Vurderinger, kjente mangler og erfaringer er samlet i [
 | [workflows](https://github.com/the-most-secure-supply-chain-ever-maaan/workflows) | Den et reusable workflow repository som bygger, pusher og attesterer imaget |
 | [cluster-config](https://github.com/the-most-secure-supply-chain-ever-maaan/cluster-config) | Kubernetes-manifester og ArgoCD-oppsett. ArgoCD deployer det som står her til clusteret |
 
-## Hvordan det henger sammen
+## Flyt
 
 ```mermaid
-flowchart LR
-  A[thunderbolt<br/>push til main] --> B[workflows<br/>build.yaml]
-  B --> C[GHCR<br/>image + provenance]
-  B --> D[cluster-config<br/>PR med ny digest]
-  D --> E[ArgoCD]
-  E --> F[Sigstore<br/>Policy Controller]
-  C -.-> F
-  F --> G[Pod kjører]
+flowchart TD
+  subgraph GH["GitHub"]
+    A[thunderbolt<br/>push til main] --> B[workflows: build.yaml<br/>bygg og push image]
+    B --> C[Lag og signer<br/>provenance]
+    C --> D[Verifiser<br/>provenance]
+    D --> E[cluster-config<br/>PR med ny digest]
+  end
+ 
+  B -- image --> R[(GHCR)]
+  C -- provenance --> R
+ 
+  subgraph K8S["Kubernetes-cluster"]
+    F[ArgoCD] --> G{Policy Controller<br/>gyldig provenance?}
+    G -- ja --> H[Pod startes]
+    G -- nei --> I[Avvist]
+  end
+ 
+  E -- merge --> F
+  R -. hentes ved deploy .-> G
 ```
 
 1. Push til `main` starter `build.yml`, som kaller byggeworkflowen `build.yaml` i workflows-repoet.
