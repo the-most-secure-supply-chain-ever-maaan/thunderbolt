@@ -1,6 +1,8 @@
-# Sikkerhetsrapport_v2
+# Sikkerhetsrapport
 
 ![](https://slsa.dev/spec/v1.2/images/supply-chain-threats.svg)
+
+Rapporten går gjennom truslene i SLSA sin trusselmodell, fra kildekode til bruk. For hver trussel beskrives tiltak og hva tiltakene ikke stopper. Den kan brukes som sjekkliste for å trusselvurdere egen byggekjede.
 
 # 1. Kilde
 

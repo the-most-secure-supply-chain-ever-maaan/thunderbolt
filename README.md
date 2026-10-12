@@ -4,7 +4,7 @@ Thunderbolt er et demoprosjekt der vi har bygget og testet en byggekjede for pro
 
 Selve appen er en enkel Vite/React-app. Rundt den har vi satt opp bygging med GitHub Actions, signert provenance med Sigstore og verifisering i Kubernetes med Sigstore Policy Controller. Vi undersøkte også hvordan det samme kunne håndheves i Google Cloud Run med Binary Authorization. Det viste seg å være utfordrende å verifisere attesterte images, fordi Binary Authorization kan ikke verifisere attester fra Github direkte. Vi undersøkte en mulig løsning men valgte å ikke gå videre med det.
 
-Prosjektet er avsluttet. Vurderinger, kjente mangler og erfaringer er samlet i [sikkerhetsrapporten](./SIKKERHETSRAPPORT.md).
+Prosjektet er avsluttet. Sikkerhetsrapporten går gjennom truslene i SLSA sin trusselmodell, fra kildekode til bruk, med tiltak og hva tiltakene ikke stopper, samlet i [sikkerhetsrapporten](./SIKKERHETSRAPPORT.md). Rapporten kan brukes til å trusselvurdere egen byggekjede.
 
 ## Repoer
 
